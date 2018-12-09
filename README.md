@@ -5,3 +5,9 @@ The documentation of openvino gives many examples, how to run specific network a
 This repo aims at giving two examples of the workflow, specifically the following two architectures will be covered:
  - simple, two-layer network (conv layer followed by fully connected layer, no activation functions)
  - simple convolutional network with some residual connections and two fully connected heads.
+
+
+## Train the network (optionally)
+For completeness, I added code to generate your own checkpoints. To just check out the conversion from tensorflow checkpoints to the optimized intel representation, skip this section.
+
+## Save a frozen testgraph
