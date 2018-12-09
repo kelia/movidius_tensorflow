@@ -15,8 +15,8 @@ class OpenVinoDetector(object):
         model_bin = model_name + '.bin'
 
         # Load TFLite model and allocate tensors.
-        plugin = IEPlugin(device='MYRIAD')
-        # plugin = IEPlugin(device='CPU')
+        # plugin = IEPlugin(device='MYRIAD')
+        plugin = IEPlugin(device='CPU')
         net = IENetwork.from_ir(model=model_xml, weights=model_bin)
 
         self.input_blob = next(iter(net.inputs))
@@ -43,9 +43,9 @@ class OpenVinoDetector(object):
         return det_out
 
 
-t = OpenVinoDetector('/home/elia/Desktop/movidius_checkpoint/181203/optimized_graph_FP16')
+t = OpenVinoDetector('simplified_testgraph/optimized_graph_FP32')
 # t = OpenVinoDetector('/home/elia/Desktop/movidius_checkpoint/181203/optimized_graph_FP32')
-image = cv2.imread('/home/elia/movidius_tutorials/frame_00000.png')
+image = cv2.imread('./query_imgs/frame_00000.png')
 prediction = t.predict(image)
 print(prediction[0][0:10])
 print('DONE')
