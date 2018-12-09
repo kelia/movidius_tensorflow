@@ -1,12 +1,10 @@
 import tensorflow as tf
 import cv2
 import numpy as np
-from training.src.models.nets import cnn, mean_predictor, variance_predictor
+from training.src.models.nets import cnn, mean_predictor, variance_predictor_no_exp
 
 
 def plain_tf_inference(checkpoint, query_img):
-    print("plain TF inference...")
-
     # Build test graph
     image_height = 240
     image_width = 320
@@ -26,7 +24,7 @@ def plain_tf_inference(checkpoint, query_img):
 
     mean_prediction = mean_predictor(image_descriptors=image_descriptors, output_dim=action_dim,
                                      is_training=False, scope='Mean_Prediction')
-    variance_prediction = variance_predictor(image_descriptors=image_descriptors, output_dim=action_dim,
+    variance_prediction = variance_predictor_no_exp(image_descriptors=image_descriptors, output_dim=action_dim,
                                              is_training=False, scope='Variance_Prediction')
 
     prediction = tf.concat([mean_prediction, variance_prediction], axis=1)
@@ -42,16 +40,8 @@ def plain_tf_inference(checkpoint, query_img):
         # Do inference
         debug_img = cv2.cvtColor(cv2.imread(query_img), cv2.COLOR_BGR2RGB)
 
-        ## debug stuff
-        # self.predict_pose(cv2.cvtColor(cv2.imread("/home/elia/movidius_tutorials/frame_00000.png"), cv2.COLOR_BGR2RGB))
         inputs = {'images': debug_img[None]}
         feed_dict = {input_uint8: inputs['images']}
-        results = sess.run(prediction, feed_dict=feed_dict)
-
-
-
-        predictions = np.squeeze(results)
-        print("flattened tensor")
-        print(predictions.shape)
+        predictions = sess.run(prediction, feed_dict=feed_dict)
 
     return predictions

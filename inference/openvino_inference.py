@@ -14,8 +14,6 @@ class OpenVinoDetector(object):
         model_xml = model_name + '.xml'
         model_bin = model_name + '.bin'
 
-        # Load TFLite model and allocate tensors.
-        # plugin = IEPlugin(device='MYRIAD')
         plugin = IEPlugin(device=device)
         net = IENetwork.from_ir(model=model_xml, weights=model_bin)
 
@@ -27,11 +25,12 @@ class OpenVinoDetector(object):
     def preprocess(self, input_image):
         """ Performs preprocessing on the input image to prepare it for inference.
        """
-        preproc_image = cv2.cvtColor(input_image, cv2.COLOR_BGR2RGB)
-        preproc_image = preproc_image.transpose((2, 0, 1))  # Change data layout from HWC to CHW
-        preproc_image = preproc_image.astype(np.float16)
-        preproc_image *= 0.00392156862745098  # 1.0 / 255.0
-        return preproc_image
+        image = cv2.cvtColor(input_image, cv2.COLOR_BGR2RGB)
+        image = image.transpose((2, 0, 1))  # Change data layout from HWC to CHW
+        image = image.astype(np.float16)
+        image *= 0.00392157  # 1.0 / 255.0
+
+        return image
 
     def predict(self, image):
         """ """
@@ -45,8 +44,6 @@ class OpenVinoDetector(object):
 
 def openvino_inference(intermediate_rep, query_img, device):
     t = OpenVinoDetector(intermediate_rep, device)
-    # t = OpenVinoDetector('/home/elia/Desktop/movidius_checkpoint/181203/optimized_graph_FP32')
     image = cv2.imread(query_img)
     prediction = t.predict(image)
-    print(prediction[0][0:10])
-    print('DONE')
+    return prediction
