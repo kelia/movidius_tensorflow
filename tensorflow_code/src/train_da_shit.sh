@@ -7,6 +7,9 @@ python3 mo_tf.py --input_model /home/elia/Desktop/movidius_checkpoint/181203/fro
 python3 mo_tf.py --input_model /home/elia/Desktop/movidius_checkpoint/181203/frozen_graph.pb --model_name optimized_graph_FP32 --output_dir /home/elia/Desktop/movidius_checkpoint/181203/ --data_type FP32 --disable_fusing
 
 
+python3
+
+
 python train_reactive_learner.py --train_mean=True --resume_train=False --train_dir=../data/ICRA/simulation/Training_mean/ --val_dir=../data/ICRA/simulation/Validation_mean/ --checkpoint_dir=../results/181204_debug --max_epochs=50
 
 python train_network.py --network_topology=simple --train_dir=../data/Training/ --val_dir=../data/Validation/ --max_epochs=50
