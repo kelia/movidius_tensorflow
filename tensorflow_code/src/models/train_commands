@@ -1,0 +1,42 @@
+
+### ICRA
+# train mean prediction part
+python train_reactive_learner.py --train_mean=True --train_dir=../data/sim_reactive/Training_mean/ --val_dir=../data/sim_reactive/Validation_mean/ --checkpoint_dir=../results/180914_sim
+python train_reactive_learner.py --train_mean=True --train_dir=../data/real_reactive/Training_mean/ --val_dir=../data/real_reactive/Validation_mean/ --checkpoint_dir=../results/180912_real
+
+
+# train variance prediction part
+python train_reactive_learner.py --train_mean=False --resume_train --train_dir=../data/sim_reactive/Training_variance/ --val_dir=../data/sim_reactive/Validation_variance/ --checkpoint_dir=../results/180914_sim
+python train_reactive_learner.py --train_mean=False --resume_train --train_dir=../data/real_reactive/Training_variance/ --val_dir=../data/real_reactive/Validation_variance/ --checkpoint_dir=../results/180912_real
+
+
+
+# Video stuff
+roscore
+roslaunch performance_analysis performance_video.launch
+rviz rviz
+roslaunch gazebo_simulation_adr video_util.launch
+rosbag play innopark_22_2018-09-20-13-11-08.bag
+
+
+### IROS
+# train mean prediction part
+python train_reactive_learner.py --train_mean=True --train_dir=../data/IROS18/simulation/Training_mean/ --val_dir=../data/IROS18/simulation/Validation_mean/ --checkpoint_dir=../results/180925_sim_2
+python train_reactive_learner.py --train_mean=True --train_dir=../data/IROS18/real_world/Training_mean/ --val_dir=../data/IROS18/real_world/Validation_mean/ --checkpoint_dir=../results/180927_real
+
+
+# train variance prediction part
+python train_reactive_learner.py --train_mean=False --resume_train --train_dir=../data/IROS18/simulation/Training_variance/ --val_dir=../data/IROS18/simulation/Validation_variance/ --checkpoint_dir=../results/180925_sim_2
+python train_reactive_learner.py --train_mean=False --resume_train --train_dir=../data/IROS18/real_world/Training_variance/ --val_dir=../data/IROS18/real_world/Validation_variance/ --checkpoint_dir=../results/180927_real
+
+python train_reactive_learner.py --train_mean=False --resume_train --train_dir=../data/IROS18/real_world/Training_mean/ --val_dir=../data/IROS18/real_world/Validation_mean/ --checkpoint_dir=../results/180926_real
+
+
+### Jungle gate
+python train_reactive_learner.py --train_mean=True --train_dir=../data/IROS18/simulation/Jungle_training_mean/ --val_dir=../data/IROS18/simulation/Jungle_validation_mean/ --checkpoint_dir=../results/180929_jungle_sim
+python train_reactive_learner.py --train_mean=False --resume_train --train_dir=../data/IROS18/simulation/Jungle_training_variance/ --val_dir=../data/IROS18/simulation/Jungle_validation_variance/ --checkpoint_dir=../results/180929_jungle_sim
+
+
+### One network to rule them all
+python train_reactive_learner.py --train_mean=True --train_dir=../data/IROS18/real_world/All/Training_mean/ --val_dir=../data/IROS18/real_world/All/Validation_mean/ --checkpoint_dir=../results/181001_all
+
