@@ -11,3 +11,12 @@ This repo aims at giving two examples of the workflow, specifically the followin
 For completeness, I added code to generate your own checkpoints. To just check out the conversion from tensorflow checkpoints to the optimized intel representation, skip this section.
 
 ## Save a frozen testgraph
+
+### Simplify the computation graph
+When saving a model in tensorflow during training, the input pipeline is usually part of the graph and therefore included in the checkpoint. Since this part of the computation graph is not needed at inference time, in a first step, a reduced version of the graph is generated that only contains operations that are actually executed during inference. 
+
+```
+python generate_simplified_graph.py
+```
+
+### Freeze the graph
