@@ -38,12 +38,12 @@ To perform this step, the openvino toolkit needs to be installed first.
 ### Convert the model using the model optimizer
 Convert for CPU:
 ```
-python3 /opt/intel/computer_vision_sdk/deployment_tools/model_optimizer/mo_tf.py --input_model simplified_testgraph/frozen_graph.pb --model_name optimized_graph_FP32 --output_dir simplified_testgraph/ --data_type FP32 --disable_fusing
+python3 /opt/intel/computer_vision_sdk/deployment_tools/model_optimizer/mo_tf.py --input_model graph_data/frozen_graph.pb --model_name optimized_graph_FP32 --output_dir graph_data/ --data_type FP32 --disable_fusing
 ```
 
 Convert for NCS:
 ```
-python3 /opt/intel/computer_vision_sdk/deployment_tools/model_optimizer/mo_tf.py --input_model simplified_testgraph/frozen_graph.pb --model_name optimized_graph_FP16 --output_dir simplified_testgraph/ --data_type FP16 --disable_fusing
+python3 /opt/intel/computer_vision_sdk/deployment_tools/model_optimizer/mo_tf.py --input_model graph_data/frozen_graph.pb --model_name optimized_graph_FP16 --output_dir graph_data/ --data_type FP16 --disable_fusing
 ```
 
 ## Test inference results
