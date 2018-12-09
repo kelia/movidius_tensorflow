@@ -27,10 +27,30 @@ python freeze_graph.py
 
 ## Convert the model to an optimized Intermediate Representation (IR)
 To perform this step, the openvino toolkit needs to be installed first.
-
+### Install the OpenVino Toolkit
 1. Register and download the openvino toolkit from [here](https://software.intel.com/en-us/neural-compute-stick/get-started). You will receive an email with the download link. Choose the linux version (without FPGA support).
 
 2. Follow the installation steps [here](https://software.intel.com/en-us/articles/OpenVINO-Install-Linux#inpage-nav-2)
    * **Attention**: If you want to port a **new** network to the movidius stick, you need to configure the model optimizer. Else you can skip this step.  
    * Note: you can configure the model optimizer for multiple frameworks (TF, Caffe, ...) or only for a specific one. 
    * Perform [these additional steps](https://software.intel.com/en-us/articles/OpenVINO-Install-Linux#inpage-nav-3-2) for the platform where the NCS is used.
+   
+### Convert the model using the model optimizer
+Convert for CPU:
+```
+python3 /opt/intel/computer_vision_sdk/deployment_tools/model_optimizer/mo_tf.py --input_model simplified_testgraph/frozen_graph.pb --model_name optimized_graph_FP32 --output_dir simplified_testgraph/ --data_type FP32 --disable_fusing
+```
+
+Convert for NCS:
+```
+python3 /opt/intel/computer_vision_sdk/deployment_tools/model_optimizer/mo_tf.py --input_model simplified_testgraph/frozen_graph.pb --model_name optimized_graph_FP16 --output_dir simplified_testgraph/ --data_type FP16 --disable_fusing
+```
+
+## Test inference results
+
+In the following, the results of a simple forward pass are compared between the following configurations:
+ - plain tensorflow
+ - tensorflow calling the frozen graph
+ - openvino inference engine python API
+ - openvino inference engine C++ API
+   
