@@ -10,6 +10,11 @@ This repo aims at giving two examples of the workflow, specifically the followin
 ## 0. Train the network (optionally)
 For completeness, I added code to generate your own checkpoints. To just check out the conversion from tensorflow checkpoints to the optimized intel representation, skip this section.
 
+```
+cd training/src
+python train_network.py --network_topology=simple --train_dir=../data/Training/ --val_dir=../data/Validation/ --max_epochs=50
+```
+
 ## 1. Save a frozen testgraph
 
 ### 1.1 Simplify the computation graph
