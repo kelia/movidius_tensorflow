@@ -2,8 +2,6 @@ from absl import flags
 
 FLAGS = flags.FLAGS
 
-flags.DEFINE_string('network_topology', 'simple', 'Network to train, "simple" or "residual-cnn"')
-
 # Train parameters
 flags.DEFINE_integer('img_width', 320, 'Target Image Width')
 flags.DEFINE_integer('img_height', 240, 'Target Image Height')

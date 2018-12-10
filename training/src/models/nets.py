@@ -1,61 +1,42 @@
 import tensorflow as tf
 
 
-def cnn(img_input, is_training,
-        scope='Prediction', reuse=False, padding='same', data_format='NHWC'):
-    """
-    Define model architecture.
-
-    # Arguments
-       img_input: Batch of input images
-       output_dim: Number of output trajectories (cardinality of classification)
-       scope: Variable scope in which all variables will be saved
-       reuse: Whether to reuse already initialized variables
-
-    # Returns
-       model: Logits on output trajectories
-    """
+def cnn(img_input, scope='Prediction', reuse=False, padding='same', data_format='channels_last'):
     with tf.variable_scope(scope, reuse=reuse):
         x1 = tf.layers.conv2d(inputs=img_input, filters=32, kernel_size=5, strides=[2, 2], padding=padding,
-                              data_format='channels_last')
+                              data_format=data_format)
         x1 = tf.layers.max_pooling2d(x1, pool_size=2, strides=2)
 
         # First residual block
         x2 = tf.nn.leaky_relu(x1, alpha=0.2)
-        # x2 = tf.pad(x2, [[0, 0], [1, 1], [1, 1], [0, 0]], "CONSTANT")
         x2 = tf.layers.conv2d(inputs=x2, filters=32, kernel_size=3, strides=[2, 2],
                               padding=padding,
-                              data_format='channels_last')
-        # x2 = tf.pad(x2, [[0, 0], [1, 1], [1, 1], [0, 0]], "CONSTANT")
+                              data_format=data_format)
         x2 = tf.layers.conv2d(inputs=x2, filters=32, kernel_size=3, strides=[1, 1],
                               padding=padding,
-                              data_format='channels_last')
+                              data_format=data_format)
         x1 = tf.layers.conv2d(x1, filters=32, kernel_size=1, strides=[2, 2], padding=padding)
         x3 = x2 + x1
 
         # Second residual block
         x4 = tf.nn.leaky_relu(x3, alpha=0.2)
-        # x4 = tf.pad(x4, [[0, 0], [1, 1], [1, 1], [0, 0]], "CONSTANT")
         x4 = tf.layers.conv2d(inputs=x4, filters=64, kernel_size=3, strides=[2, 2],
                               padding=padding,
-                              data_format='channels_last')
-        # x4 = tf.pad(x4, [[0, 0], [1, 1], [1, 1], [0, 0]], "CONSTANT")
+                              data_format=data_format)
         x4 = tf.layers.conv2d(inputs=x4, filters=64, kernel_size=3, strides=[1, 1],
                               padding=padding,
-                              data_format='channels_last')
+                              data_format=data_format)
         x3 = tf.layers.conv2d(x3, filters=64, kernel_size=1, strides=[2, 2], padding=padding)
         x5 = x4 + x3
 
         # Third residual block
         x6 = tf.nn.leaky_relu(x5, alpha=0.2)
-        # x6 = tf.pad(x6, [[0, 0], [1, 1], [1, 1], [0, 0]], "CONSTANT")
         x6 = tf.layers.conv2d(inputs=x6, filters=64, kernel_size=3, strides=[2, 2],
                               padding=padding,
-                              data_format='channels_last')
-        # x6 = tf.pad(x6, [[0, 0], [1, 1], [1, 1], [0, 0]], "CONSTANT")
+                              data_format=data_format)
         x6 = tf.layers.conv2d(inputs=x6, filters=64, kernel_size=3, strides=[1, 1],
                               padding=padding,
-                              data_format='channels_last')
+                              data_format=data_format)
         x5 = tf.layers.conv2d(x5, filters=64, kernel_size=1, strides=[2, 2], padding=padding)
         x7 = x6 + x5
 
@@ -66,19 +47,7 @@ def cnn(img_input, is_training,
 
 
 def mean_predictor(image_descriptors, output_dim, is_training,
-                   scope='Prediction', reuse=False, l2_reg_scale=1.0, data_format='NCHW'):
-    """
-    Define model architecture.
-
-    # Arguments
-       img_input: Batch of input images
-       output_dim: Number of output trajectories (cardinality of classification)
-       scope: Variable scope in which all variables will be saved
-       reuse: Whether to reuse already initialized variables
-
-    # Returns
-       model: Logits on output trajectories
-    """
+                   scope='Prediction', reuse=False):
     with tf.variable_scope(scope, reuse=reuse):
         x1 = tf.layers.dense(image_descriptors, units=128)
         x1 = tf.layers.dropout(x1, rate=0.5, training=is_training)
@@ -97,19 +66,7 @@ def mean_predictor(image_descriptors, output_dim, is_training,
 
 
 def variance_predictor(image_descriptors, output_dim, is_training,
-                       scope='Prediction', reuse=False, l2_reg_scale=1.0, data_format='NCHW'):
-    """
-    Define model architecture.
-
-    # Arguments
-       img_input: Batch of input images
-       output_dim: Number of output trajectories (cardinality of classification)
-       scope: Variable scope in which all variables will be saved
-       reuse: Whether to reuse already initialized variables
-
-    # Returns
-       model: Logits on output trajectories
-    """
+                       scope='Prediction', reuse=False):
     with tf.variable_scope(scope, reuse=reuse):
         x1 = tf.layers.dense(image_descriptors, units=128)
         x1 = tf.layers.dropout(x1, rate=0.5, training=is_training)
@@ -141,19 +98,7 @@ def variance_predictor(image_descriptors, output_dim, is_training,
 
 
 def variance_predictor_no_exp(image_descriptors, output_dim, is_training,
-                              scope='Prediction', reuse=False, l2_reg_scale=1.0, data_format='NCHW'):
-    """
-    Define model architecture.
-
-    # Arguments
-       img_input: Batch of input images
-       output_dim: Number of output trajectories (cardinality of classification)
-       scope: Variable scope in which all variables will be saved
-       reuse: Whether to reuse already initialized variables
-
-    # Returns
-       model: Logits on output trajectories
-    """
+                              scope='Prediction', reuse=False):
     with tf.variable_scope(scope, reuse=reuse):
         x1 = tf.layers.dense(image_descriptors, units=128)
         x1 = tf.layers.dropout(x1, rate=0.5, training=is_training)

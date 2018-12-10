@@ -94,9 +94,7 @@ class Learner(object):
             image_batch, pose_batch = current_batch[0], current_batch[1]
 
         with tf.name_scope("pose_prediction"):
-            image_descriptors = cnn(image_batch,
-                                    is_training=is_training_ph,
-                                    scope='CNN')
+            image_descriptors = cnn(image_batch, scope='CNN')
 
             mean_prediction = mean_predictor(image_descriptors=image_descriptors, output_dim=self.action_dim,
                                              is_training=is_training_ph, scope='Mean_Prediction')
