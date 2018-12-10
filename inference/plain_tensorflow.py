@@ -1,6 +1,6 @@
-import tensorflow as tf
 import cv2
-import numpy as np
+import tensorflow as tf
+
 from training.src.models.nets import cnn, mean_predictor, variance_predictor_no_exp
 
 
@@ -25,7 +25,7 @@ def plain_tf_inference(checkpoint, query_img):
     mean_prediction = mean_predictor(image_descriptors=image_descriptors, output_dim=action_dim,
                                      is_training=False, scope='Mean_Prediction')
     variance_prediction = variance_predictor_no_exp(image_descriptors=image_descriptors, output_dim=action_dim,
-                                             is_training=False, scope='Variance_Prediction')
+                                                    is_training=False, scope='Variance_Prediction')
 
     prediction = tf.concat([mean_prediction, variance_prediction], axis=1)
 
@@ -38,9 +38,9 @@ def plain_tf_inference(checkpoint, query_img):
         print("Restored checkpoint file {}".format(checkpoint))
         print("--------------------------------------------------")
         # Do inference
-        debug_img = cv2.cvtColor(cv2.imread(query_img), cv2.COLOR_BGR2RGB)
+        image = cv2.cvtColor(cv2.imread(query_img), cv2.COLOR_BGR2RGB)
 
-        inputs = {'images': debug_img[None]}
+        inputs = {'images': image[None]}
         feed_dict = {input_uint8: inputs['images']}
         predictions = sess.run(prediction, feed_dict=feed_dict)
 

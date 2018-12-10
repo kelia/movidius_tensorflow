@@ -1,12 +1,10 @@
-import inference.plain_tensorflow as plain_tf
-import inference.use_frozen_graph as frozen_tf
-import inference.openvino_inference as openvino
-
 from colored import fg, bg, attr
 
+import inference.openvino_inference as openvino
+import inference.plain_tensorflow as plain_tf
+import inference.use_frozen_graph as frozen_tf
 
 print("Comparing the results of different inference methods...")
-
 
 checkpoint = 'graph_data/model.best'
 frozen_model = 'graph_data/frozen_graph.pb'
@@ -19,7 +17,6 @@ print("Plain tensorflow inference")
 print ('%s%s--------------------------------------------------%s' % (fg('white'), bg('blue'), attr('reset')))
 predictions_plain_tf = plain_tf.plain_tf_inference(checkpoint, query_img)
 print(predictions_plain_tf)
-
 
 print ('%s%s--------------------------------------------------%s' % (fg('white'), bg('blue'), attr('blink')))
 print("Feed frozen graph using tensorflow")
@@ -39,7 +36,5 @@ print("OpenVino inference on CPU")
 print ('%s%s--------------------------------------------------%s' % (fg('white'), bg('blue'), attr('reset')))
 predictions_openvino_cpu = openvino.openvino_inference(intermediate_rep_cpu, query_img, device="CPU")
 print(predictions_openvino_cpu)
-
-
 
 print("Done.")

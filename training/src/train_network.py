@@ -2,7 +2,7 @@ import tensorflow as tf
 import pprint
 import random
 import numpy as np
-from models.reactive_learner import ReactiveActionLearner
+from models.learner import Learner
 import os
 import gflags
 import sys
@@ -29,7 +29,7 @@ def _main():
 
     assert os.path.exists(FLAGS.train_dir), "Specify training data directory!"
     assert os.path.exists(FLAGS.val_dir), "Specify validation data directory!"
-    trl = ReactiveActionLearner(FLAGS)
+    trl = Learner(FLAGS)
     trl.train(FLAGS)
 
 
