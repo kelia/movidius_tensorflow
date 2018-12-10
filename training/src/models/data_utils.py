@@ -1,14 +1,11 @@
-import numpy as np
-import math
-import re
 import os
-import cv2
-import time
+import re
 
+import numpy as np
 from tensorflow.python.keras.preprocessing.image import Iterator
 
 
-class BaseDirectoryIterator(Iterator):
+class DirectoryIterator(Iterator):
     """
     Class for managing data loading.of images and labels
     We assume that the folder structure is:
@@ -32,7 +29,6 @@ class BaseDirectoryIterator(Iterator):
        shuffle: Whether to shuffle data or not
        seed : numpy seed to shuffle data
        follow_links: Bool, whether to follow symbolic links or not
-
     """
 
     def __init__(self, directory, radius_normalization,
@@ -74,65 +70,6 @@ class BaseDirectoryIterator(Iterator):
 
         print('Found {} images belonging to {} experiments.'.format(
             self.samples, self.num_experiments))
-        super(BaseDirectoryIterator, self).__init__(self.samples,
-                                                    batch_size, shuffle, seed)
-
-    def _recursive_list(self, subpath):
-        return sorted(os.walk(subpath, followlinks=self.follow_links),
-                      key=lambda tpl: tpl[0])
-
-    def _load_img(self, path):
-        """
-        Load an image. Ans reshapes it to target size
-
-        # Arguments
-            path: Path to image file.
-            target_size: Either `None` (default to original size)
-                or tuple of ints `(img_width, img_height)`.
-
-        # Returns
-            Image as numpy array.
-        """
-        img = cv2.imread(path)
-        if self.target_size:
-            if (img.shape[0], img.shape[1]) != self.target_size:
-                img = cv2.resize(img, self.target_size,
-                                 interpolation=cv2.INTER_LINEAR)
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-
-        return img
-
-
-class ReactiveDirIterator(BaseDirectoryIterator):
-    def next(self):
-        """
-        Public function to fetch next batch. Note that this function
-        will only be used for evaluation and testing, but not for training.
-
-        # Returns
-            The next batch of images and labels.
-        """
-        with self.lock:
-            index_array = next(
-                self.index_generator)
-            current_batch_size = index_array.shape[0]
-
-        # Image transformation is not under thread lock, so it can be done in
-        # parallel
-        img_batch = np.zeros((current_batch_size,) + self.image_shape,
-                             dtype=np.uint8)
-        batch_y = np.zeros((current_batch_size, 3),
-                           dtype=np.float32)
-
-        # Build batch of image data
-        for i, j in enumerate(index_array):
-            fname = self.filenames[j]
-            x = self._load_img(os.path.join(fname))
-            img_batch[i] = x
-
-        poses_labels_batch = self.poses_labels[index_array]
-
-        return img_batch, poses_labels_batch
 
     def _decode_experiment_dir(self, dir_subpath):
         poses_labels_fname = os.path.join(dir_subpath, self.filename_poses)
@@ -142,7 +79,6 @@ class ReactiveDirIterator(BaseDirectoryIterator):
         # Try load labels
         poses_labels = np.loadtxt(poses_labels_fname, delimiter=';')
         poses_labels[:, 0] = poses_labels[:, 0] / self.radius_normalization
-
 
         # Now fetch all images in the image subdir
         image_dir_path = os.path.join(dir_subpath, "images")
@@ -163,3 +99,7 @@ class ReactiveDirIterator(BaseDirectoryIterator):
                     exp_samples += 1
         # encode how many samples this experiment has
         self.n_samples_per_exp.append(exp_samples)
+
+    def _recursive_list(self, subpath):
+        return sorted(os.walk(subpath, followlinks=self.follow_links),
+                      key=lambda tpl: tpl[0])

@@ -1,23 +1,62 @@
-# Action Net Learner
-
 import os
 import time
 from itertools import count
-import random
 import tensorflow as tf
 import numpy as np
 from tensorflow.python.keras.utils import Progbar
-from .base_learner import BaseLearner
 from .nets import cnn, mean_predictor, variance_predictor, variance_predictor_no_exp
-from .data_utils import ReactiveDirIterator as DirectoryIterator
-from .datagenerator import ImageDataGeneratorReactive
+from .data_utils import DirectoryIterator
+from .datagenerator import ImageDataGenerator
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 
-class ReactiveActionLearner(BaseLearner):
+class Learner(object):
+    def __init__(self):
+        self.min_val_loss = np.inf
+        self.global_step = tf.Variable(0,
+                                       name='global_step',
+                                       trainable=False)
+
+        self.incr_global_step = tf.assign(self.global_step,
+                                          self.global_step + 1)
+        self.num_channels = 3
+        self.action_dim = 4
+
+    def save(self, sess, checkpoint_dir, step):
+        model_name = 'model'
+        if step == 'best':
+            self.saver.save(sess,
+                            os.path.join(checkpoint_dir, model_name + '.best'))
+            print(" [*] Saving checkpoint to {}/{}.best".format(checkpoint_dir,
+                                                                model_name))
+        else:
+            self.saver.save(sess,
+                            os.path.join(checkpoint_dir, model_name),
+                            global_step=step)
+            print(" [*] Saving checkpoint to {}/{}-{}".format(checkpoint_dir,
+                                                              model_name, step))
+
+    def preprocess_image(self, image):
+        """ Preprocess an input image
+        Args:
+            Image: A uint8 tensor
+        Returns:
+            image: A preprocessed float32 tensor.
+        """
+        image = tf.cast(image, dtype=tf.float32)
+        image = tf.divide(image, 255.0)
+
+        return image
+
+    def setup_inference(self, config, mode):
+        """Sets up the inference graph.
+        """
+        self.mode = mode
+        self.config = config
+        self.build_test_graph()
+
     def get_filenames_list(self, directory):
-        # Load labels, velocities and image filenames. The shuffling will be done after
         assert os.path.isdir(directory)
         iterator = DirectoryIterator(directory, self.config.radius_normalization,
                                      shuffle=False)
@@ -32,15 +71,14 @@ class ReactiveActionLearner(BaseLearner):
         image_list_tr, label_list_tr = self.get_filenames_list(self.config.train_dir)
         image_list_val, label_list_val = self.get_filenames_list(self.config.val_dir)
 
-        # Place data loading and preprocessing on the cpu
         with tf.device('/cpu:0'):
-            tr_data = ImageDataGeneratorReactive([image_list_tr, label_list_tr],
+            tr_data = ImageDataGenerator([image_list_tr, label_list_tr],
                                                  mode='training',
                                                  batch_size=self.config.batch_size,
                                                  img_size=(image_height, image_width),
                                                  shuffle=True)
 
-            val_data = ImageDataGeneratorReactive([image_list_val, label_list_val],
+            val_data = ImageDataGenerator([image_list_val, label_list_val],
                                                   mode='inference',
                                                   batch_size=self.config.batch_size,
                                                   img_size=(image_height, image_width),
@@ -85,9 +123,6 @@ class ReactiveActionLearner(BaseLearner):
             variance_norm = tf.reduce_sum(sigma[:, 0])
 
         with tf.name_scope("train_op"):
-            # Collect training operations in a separate process for each part,
-            # independently. It is important that the names matches the
-            # namescopes defined above.
             train_vars = {
                 'CNN': [var for var in tf.trainable_variables(scope='CNN')],
                 'Mean_Prediction': [var for var in tf.trainable_variables(scope='Mean_Prediction')],
@@ -101,26 +136,9 @@ class ReactiveActionLearner(BaseLearner):
             for key, vars_list in train_vars.items():
                 grads_and_vars[key] = optimizer.compute_gradients(train_loss,
                                                                   var_list=train_vars[key])
-            # grads_and_vars = optimizer.compute_gradients(train_loss,
-            #                                              var_list=train_vars['ADR_posenet'])
-
-            # histogram of gradients and weights
-            grads_sum = []
-            vars_sum = []
-            # for gradient, variable in grads_and_vars:
-            #     grads_sum.append(tf.summary.histogram("gradients/" + variable.name, tf.norm(gradient)))
-            #     vars_sum.append(tf.summary.histogram("variables/" + variable.name, tf.norm(variable)))
 
             # Gradient clipping here
             self.grads_and_vars = grads_and_vars
-            # self.grads_and_vars = [(tf.clip_by_value(grad, -0.5, 0.5), var) for grad, var in grads_and_vars]
-
-            # histogram of clipped gradients
-            grads_clipped_sum = []
-            # for gradient, variable in self.grads_and_vars:
-            #     grads_clipped_sum.append(tf.summary.histogram("gradients_clipped/" + variable.name, tf.norm(gradient)))
-
-            # train_op = optimizer.apply_gradients(self.grads_and_vars)
 
             train_op = {}
 

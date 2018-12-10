@@ -29,7 +29,7 @@ def _main():
 
     assert os.path.exists(FLAGS.train_dir), "Specify training data directory!"
     assert os.path.exists(FLAGS.val_dir), "Specify validation data directory!"
-    trl = Learner(FLAGS)
+    trl = Learner()
     trl.train(FLAGS)
 
 
