@@ -18,9 +18,7 @@ def plain_tf_inference(checkpoint, query_img):
     image = tf.cast(input_uint8, dtype=tf.float32)
     image = tf.divide(image, 255.0)
 
-    image_descriptors = cnn(image,
-                            is_training=False,
-                            scope='CNN')
+    image_descriptors = cnn(image, scope='CNN')
 
     mean_prediction = mean_predictor(image_descriptors=image_descriptors, output_dim=action_dim,
                                      is_training=False, scope='Mean_Prediction')
