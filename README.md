@@ -12,7 +12,7 @@ For completeness, I added code to generate your own checkpoints. To just check o
 
 ```
 cd training/src
-python train_network.py --network_topology=simple --train_dir=../data/Training/ --val_dir=../data/Validation/ --max_epochs=50
+python training/src/train_network.py --network_topology=simple --train_dir=training/data/Training/ --val_dir=training/data/Validation/ --max_epochs=50
 ```
 
 ## 1. Save a frozen testgraph
