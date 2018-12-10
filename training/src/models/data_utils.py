@@ -24,24 +24,13 @@ class DirectoryIterator(Iterator):
 
     # Arguments
        directory: Path to the root directory to read data from.
-       target_size: tuple of integers, dimensions to resize input images to.
-       batch_size: The desired batch size
-       shuffle: Whether to shuffle data or not
-       seed : numpy seed to shuffle data
        follow_links: Bool, whether to follow symbolic links or not
     """
 
-    def __init__(self, directory, radius_normalization,
-                 target_size=(224, 224), num_channels=3, resume_train=False,
-                 batch_size=32, shuffle=False, seed=None, follow_links=False):
+    def __init__(self, directory, radius_normalization, follow_links=False):
         self.directory = directory
-        self.target_size = tuple(target_size)
         self.follow_links = follow_links
         self.radius_normalization = radius_normalization
-
-        self.num_channels = num_channels
-        self.image_shape = self.target_size + (self.num_channels,)
-
         self.filename_poses = 'labels.csv'
 
         # First count how many experiments are out there
@@ -56,29 +45,27 @@ class DirectoryIterator(Iterator):
 
         # Associate each filename with a corresponding label
         self.filenames = []
-        self.poses_labels = []
+        self.labels = []
         self.n_samples_per_exp = []
-        self.poses_vio = []
 
         for subdir in experiments:
             subpath = os.path.join(directory, subdir)
             self._decode_experiment_dir(subpath)
 
         # Conversion of list into array
-        self.poses_labels = np.array(self.poses_labels, dtype=np.float32)
-        self.poses_vio = np.array(self.poses_vio, dtype=np.float32)
+        self.labels = np.array(self.labels, dtype=np.float32)
 
         print('Found {} images belonging to {} experiments.'.format(
             self.samples, self.num_experiments))
 
     def _decode_experiment_dir(self, dir_subpath):
-        poses_labels_fname = os.path.join(dir_subpath, self.filename_poses)
-        assert os.path.isfile(poses_labels_fname)
+        labels_fname = os.path.join(dir_subpath, self.filename_poses)
+        assert os.path.isfile(labels_fname)
         exp_samples = 0
 
         # Try load labels
-        poses_labels = np.loadtxt(poses_labels_fname, delimiter=';')
-        poses_labels[:, 0] = poses_labels[:, 0] / self.radius_normalization
+        labels = np.loadtxt(labels_fname, delimiter=';')
+        labels[:, 0] = labels[:, 0] / self.radius_normalization
 
         # Now fetch all images in the image subdir
         image_dir_path = os.path.join(dir_subpath, "images")
@@ -94,7 +81,7 @@ class DirectoryIterator(Iterator):
                 if is_valid:
                     absolute_path = os.path.join(root, fname)
                     self.filenames.append(absolute_path)
-                    self.poses_labels.append(poses_labels[frame_number])
+                    self.labels.append(labels[frame_number])
                     self.samples += 1
                     exp_samples += 1
         # encode how many samples this experiment has

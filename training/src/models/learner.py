@@ -73,16 +73,16 @@ class Learner(object):
 
         with tf.device('/cpu:0'):
             tr_data = ImageDataGenerator([image_list_tr, label_list_tr],
-                                                 mode='training',
-                                                 batch_size=self.config.batch_size,
-                                                 img_size=(image_height, image_width),
-                                                 shuffle=True)
+                                         mode='training',
+                                         batch_size=self.config.batch_size,
+                                         img_size=(image_height, image_width),
+                                         shuffle=True)
 
             val_data = ImageDataGenerator([image_list_val, label_list_val],
-                                                  mode='inference',
-                                                  batch_size=self.config.batch_size,
-                                                  img_size=(image_height, image_width),
-                                                  shuffle=True)
+                                          mode='inference',
+                                          batch_size=self.config.batch_size,
+                                          img_size=(image_height, image_width),
+                                          shuffle=True)
 
             # create a reinitializable iterator given the dataset structure
             iterator = tf.data.Iterator.from_structure(tr_data.data.output_types, tr_data.data.output_shapes)
@@ -117,7 +117,7 @@ class Learner(object):
                                                      predictions=mu)
 
             # Adapt loss to training strategy
-            train_loss = mean_loss # + log_loss
+            train_loss = mean_loss  # + log_loss
 
             # compute norm of variance for debugging
             variance_norm = tf.reduce_sum(sigma[:, 0])
@@ -136,12 +136,8 @@ class Learner(object):
             for key, vars_list in train_vars.items():
                 grads_and_vars[key] = optimizer.compute_gradients(train_loss,
                                                                   var_list=train_vars[key])
-
-            # Gradient clipping here
             self.grads_and_vars = grads_and_vars
-
             train_op = {}
-
             for key, grad_vars in self.grads_and_vars.items():
                 train_op[key] = optimizer.apply_gradients(grad_vars)
 
@@ -154,9 +150,6 @@ class Learner(object):
         self.val_steps_per_epoch = \
             int(np.ceil(len(image_list_val) / self.config.batch_size))
         self.gt_pnt = pose_batch
-        self.grads_sum = grads_sum
-        self.vars_sum = vars_sum
-        self.grads_clipped_sum = grads_clipped_sum
         self.train_loss = train_loss
         self.mean_loss = mean_loss
         self.log_loss = log_loss
@@ -174,7 +167,7 @@ class Learner(object):
         log_loss_sum = tf.summary.scalar("log_loss", self.log_loss)
         variance_norm = tf.summary.scalar("variance_norm", self.variance_norm)
         self.step_sum_op = tf.summary.merge(
-            [train_loss_sum, mean_loss_sum, log_loss_sum, variance_norm, self.grads_sum, self.vars_sum, self.grads_clipped_sum])
+            [train_loss_sum, mean_loss_sum, log_loss_sum, variance_norm])
         self.validation_loss = tf.placeholder(tf.float32, shape=(), name="validation_loss")
         self.val_loss_sum = tf.summary.scalar("Validation_Error", self.validation_loss)
 
@@ -300,7 +293,7 @@ class Learner(object):
         mean_prediction = mean_predictor(image_descriptors=image_descriptors, output_dim=self.action_dim,
                                          is_training=False, scope='Mean_Prediction')
         variance_prediction = variance_predictor_no_exp(image_descriptors=image_descriptors, output_dim=self.action_dim,
-                                                 is_training=False, scope='Variance_Prediction')
+                                                        is_training=False, scope='Variance_Prediction')
 
         prediction = tf.concat([mean_prediction, variance_prediction], axis=1)
         # prediction = mean_prediction
