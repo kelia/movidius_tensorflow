@@ -2,17 +2,13 @@
 
 The documentation of openvino gives many examples, how to run specific network architectures by converting the model using their model optimizer. However, I could not find a single example that starts at the actual tensorflow code, and porting the model to the graph version needed for inference using the inference engine. 
 
-This repo aims at giving two examples of the workflow, specifically the following two architectures will be covered:
- - simple, two-layer network (conv layer followed by fully connected layer, no activation functions)
- - simple convolutional network with some residual connections and two fully connected heads.
-
 
 ## 0. Train the network (optionally)
 For completeness, I added code to generate your own checkpoints. To just check out the conversion from tensorflow checkpoints to the optimized intel representation, skip this section.
 
 ```
 cd training/src
-python train_network.py --network_topology=simple --train_dir=../data/Training/ --val_dir=../data/Validation/ --max_epochs=50
+python train_network.py --train_dir=../data/Training/ --val_dir=../data/Validation/ --max_epochs=5
 ```
 
 ## 1. Save a frozen testgraph
@@ -57,7 +53,6 @@ In the following, the results of a simple forward pass are compared between the 
  - plain tensorflow
  - tensorflow calling the frozen graph
  - openvino inference engine python API
- - openvino inference engine C++ API
    
 ```
 python3 compare_results.py 
