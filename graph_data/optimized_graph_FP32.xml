@@ -22,7 +22,7 @@
 				</port>
 			</input>
 			<output>
-				<port id="3">
+				<port id="2">
 					<dim>1</dim>
 					<dim>32</dim>
 					<dim>120</dim>
@@ -31,10 +31,31 @@
 			</output>
 			<blobs>
 				<weights offset="0" size="9600"/>
-				<biases offset="9600" size="128"/>
 			</blobs>
 		</layer>
-		<layer id="2" name="CNN/max_pooling2d/MaxPool" precision="FP32" type="Pooling">
+		<layer id="2" name="CNN/conv2d/BiasAdd" precision="FP32" type="ScaleShift">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>120</dim>
+					<dim>160</dim>
+				</port>
+			</input>
+			<output>
+				<port id="3">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>120</dim>
+					<dim>160</dim>
+				</port>
+			</output>
+			<blobs>
+				<weights offset="9600" size="128"/>
+				<biases offset="9728" size="128"/>
+			</blobs>
+		</layer>
+		<layer id="3" name="CNN/max_pooling2d/MaxPool" precision="FP32" type="Pooling">
 			<data auto_pad="valid" exclude-pad="true" kernel="2,2" pads_begin="0,0" pads_end="0,0" pool-method="max" strides="2,2"/>
 			<input>
 				<port id="0">
@@ -53,7 +74,7 @@
 				</port>
 			</output>
 		</layer>
-		<layer id="3" name="LeakyReLU_337" precision="FP32" type="ReLU">
+		<layer id="4" name="LeakyReLU_319" precision="FP32" type="ReLU">
 			<data negative_slope="0.20000000298023224"/>
 			<input>
 				<port id="0">
@@ -72,7 +93,7 @@
 				</port>
 			</output>
 		</layer>
-		<layer id="4" name="CNN/conv2d_1/Conv2D" precision="FP32" type="Convolution">
+		<layer id="5" name="CNN/conv2d_1/Conv2D" precision="FP32" type="Convolution">
 			<data auto_pad="same_upper" dilations="1,1" group="1" kernel="3,3" output="32" pads_begin="0,0" pads_end="1,1" strides="2,2"/>
 			<input>
 				<port id="0">
@@ -83,6 +104,27 @@
 				</port>
 			</input>
 			<output>
+				<port id="2">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>30</dim>
+					<dim>40</dim>
+				</port>
+			</output>
+			<blobs>
+				<weights offset="9856" size="36864"/>
+			</blobs>
+		</layer>
+		<layer id="6" name="CNN/conv2d_1/BiasAdd" precision="FP32" type="ScaleShift">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>30</dim>
+					<dim>40</dim>
+				</port>
+			</input>
+			<output>
 				<port id="3">
 					<dim>1</dim>
 					<dim>32</dim>
@@ -91,11 +133,11 @@
 				</port>
 			</output>
 			<blobs>
-				<weights offset="9728" size="36864"/>
-				<biases offset="46592" size="128"/>
+				<weights offset="9600" size="128"/>
+				<biases offset="46720" size="128"/>
 			</blobs>
 		</layer>
-		<layer id="5" name="CNN/conv2d_2/Conv2D" precision="FP32" type="Convolution">
+		<layer id="7" name="CNN/conv2d_2/Conv2D" precision="FP32" type="Convolution">
 			<data auto_pad="same_upper" dilations="1,1" group="1" kernel="3,3" output="32" pads_begin="1,1" pads_end="1,1" strides="1,1"/>
 			<input>
 				<port id="0">
@@ -106,6 +148,27 @@
 				</port>
 			</input>
 			<output>
+				<port id="2">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>30</dim>
+					<dim>40</dim>
+				</port>
+			</output>
+			<blobs>
+				<weights offset="46848" size="36864"/>
+			</blobs>
+		</layer>
+		<layer id="8" name="CNN/conv2d_2/BiasAdd" precision="FP32" type="ScaleShift">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>30</dim>
+					<dim>40</dim>
+				</port>
+			</input>
+			<output>
 				<port id="3">
 					<dim>1</dim>
 					<dim>32</dim>
@@ -114,11 +177,11 @@
 				</port>
 			</output>
 			<blobs>
-				<weights offset="46720" size="36864"/>
-				<biases offset="83584" size="128"/>
+				<weights offset="9600" size="128"/>
+				<biases offset="83712" size="128"/>
 			</blobs>
 		</layer>
-		<layer id="6" name="CNN/conv2d_3/Conv2D" precision="FP32" type="Convolution">
+		<layer id="9" name="CNN/conv2d_3/Conv2D" precision="FP32" type="Convolution">
 			<data auto_pad="same_upper" dilations="1,1" group="1" kernel="1,1" output="32" pads_begin="0,0" pads_end="0,0" strides="2,2"/>
 			<input>
 				<port id="0">
@@ -129,6 +192,27 @@
 				</port>
 			</input>
 			<output>
+				<port id="2">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>30</dim>
+					<dim>40</dim>
+				</port>
+			</output>
+			<blobs>
+				<weights offset="83840" size="4096"/>
+			</blobs>
+		</layer>
+		<layer id="10" name="CNN/conv2d_3/BiasAdd" precision="FP32" type="ScaleShift">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>32</dim>
+					<dim>30</dim>
+					<dim>40</dim>
+				</port>
+			</input>
+			<output>
 				<port id="3">
 					<dim>1</dim>
 					<dim>32</dim>
@@ -137,11 +221,11 @@
 				</port>
 			</output>
 			<blobs>
-				<weights offset="83712" size="4096"/>
-				<biases offset="83584" size="128"/>
+				<weights offset="9600" size="128"/>
+				<biases offset="83712" size="128"/>
 			</blobs>
 		</layer>
-		<layer id="7" name="CNN/add" precision="FP32" type="Eltwise">
+		<layer id="11" name="CNN/add" precision="FP32" type="Eltwise">
 			<data operation="sum"/>
 			<input>
 				<port id="0">
@@ -166,7 +250,7 @@
 				</port>
 			</output>
 		</layer>
-		<layer id="8" name="LeakyReLU_338" precision="FP32" type="ReLU">
+		<layer id="12" name="LeakyReLU_321" precision="FP32" type="ReLU">
 			<data negative_slope="0.20000000298023224"/>
 			<input>
 				<port id="0">
@@ -185,7 +269,7 @@
 				</port>
 			</output>
 		</layer>
-		<layer id="9" name="CNN/conv2d_4/Conv2D" precision="FP32" type="Convolution">
+		<layer id="13" name="CNN/conv2d_4/Conv2D" precision="FP32" type="Convolution">
 			<data auto_pad="same_upper" dilations="1,1" group="1" kernel="3,3" output="64" pads_begin="0,0" pads_end="1,1" strides="2,2"/>
 			<input>
 				<port id="0">
@@ -196,7 +280,7 @@
 				</port>
 			</input>
 			<output>
-				<port id="3">
+				<port id="2">
 					<dim>1</dim>
 					<dim>64</dim>
 					<dim>15</dim>
@@ -204,12 +288,10 @@
 				</port>
 			</output>
 			<blobs>
-				<weights offset="87808" size="73728"/>
-				<biases offset="161536" size="256"/>
+				<weights offset="87936" size="73728"/>
 			</blobs>
 		</layer>
-		<layer id="10" name="CNN/conv2d_5/Conv2D" precision="FP32" type="Convolution">
-			<data auto_pad="same_upper" dilations="1,1" group="1" kernel="3,3" output="64" pads_begin="1,1" pads_end="1,1" strides="1,1"/>
+		<layer id="14" name="CNN/conv2d_4/BiasAdd" precision="FP32" type="ScaleShift">
 			<input>
 				<port id="0">
 					<dim>1</dim>
@@ -227,11 +309,55 @@
 				</port>
 			</output>
 			<blobs>
-				<weights offset="161792" size="147456"/>
-				<biases offset="309248" size="256"/>
+				<weights offset="161664" size="256"/>
+				<biases offset="161920" size="256"/>
 			</blobs>
 		</layer>
-		<layer id="11" name="CNN/conv2d_6/Conv2D" precision="FP32" type="Convolution">
+		<layer id="15" name="CNN/conv2d_5/Conv2D" precision="FP32" type="Convolution">
+			<data auto_pad="same_upper" dilations="1,1" group="1" kernel="3,3" output="64" pads_begin="1,1" pads_end="1,1" strides="1,1"/>
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>15</dim>
+					<dim>20</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>15</dim>
+					<dim>20</dim>
+				</port>
+			</output>
+			<blobs>
+				<weights offset="162176" size="147456"/>
+			</blobs>
+		</layer>
+		<layer id="16" name="CNN/conv2d_5/BiasAdd" precision="FP32" type="ScaleShift">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>15</dim>
+					<dim>20</dim>
+				</port>
+			</input>
+			<output>
+				<port id="3">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>15</dim>
+					<dim>20</dim>
+				</port>
+			</output>
+			<blobs>
+				<weights offset="161664" size="256"/>
+				<biases offset="309632" size="256"/>
+			</blobs>
+		</layer>
+		<layer id="17" name="CNN/conv2d_6/Conv2D" precision="FP32" type="Convolution">
 			<data auto_pad="same_upper" dilations="1,1" group="1" kernel="1,1" output="64" pads_begin="0,0" pads_end="0,0" strides="2,2"/>
 			<input>
 				<port id="0">
@@ -242,6 +368,27 @@
 				</port>
 			</input>
 			<output>
+				<port id="2">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>15</dim>
+					<dim>20</dim>
+				</port>
+			</output>
+			<blobs>
+				<weights offset="309888" size="8192"/>
+			</blobs>
+		</layer>
+		<layer id="18" name="CNN/conv2d_6/BiasAdd" precision="FP32" type="ScaleShift">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>15</dim>
+					<dim>20</dim>
+				</port>
+			</input>
+			<output>
 				<port id="3">
 					<dim>1</dim>
 					<dim>64</dim>
@@ -250,11 +397,11 @@
 				</port>
 			</output>
 			<blobs>
-				<weights offset="309504" size="8192"/>
-				<biases offset="309248" size="256"/>
+				<weights offset="161664" size="256"/>
+				<biases offset="309632" size="256"/>
 			</blobs>
 		</layer>
-		<layer id="12" name="CNN/add_1" precision="FP32" type="Eltwise">
+		<layer id="19" name="CNN/add_1" precision="FP32" type="Eltwise">
 			<data operation="sum"/>
 			<input>
 				<port id="0">
@@ -279,7 +426,7 @@
 				</port>
 			</output>
 		</layer>
-		<layer id="13" name="LeakyReLU_" precision="FP32" type="ReLU">
+		<layer id="20" name="LeakyReLU_324" precision="FP32" type="ReLU">
 			<data negative_slope="0.20000000298023224"/>
 			<input>
 				<port id="0">
@@ -298,7 +445,7 @@
 				</port>
 			</output>
 		</layer>
-		<layer id="14" name="CNN/conv2d_7/Conv2D" precision="FP32" type="Convolution">
+		<layer id="21" name="CNN/conv2d_7/Conv2D" precision="FP32" type="Convolution">
 			<data auto_pad="same_upper" dilations="1,1" group="1" kernel="3,3" output="64" pads_begin="1,0" pads_end="1,1" strides="2,2"/>
 			<input>
 				<port id="0">
@@ -309,6 +456,27 @@
 				</port>
 			</input>
 			<output>
+				<port id="2">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>8</dim>
+					<dim>10</dim>
+				</port>
+			</output>
+			<blobs>
+				<weights offset="318080" size="147456"/>
+			</blobs>
+		</layer>
+		<layer id="22" name="CNN/conv2d_7/BiasAdd" precision="FP32" type="ScaleShift">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>8</dim>
+					<dim>10</dim>
+				</port>
+			</input>
+			<output>
 				<port id="3">
 					<dim>1</dim>
 					<dim>64</dim>
@@ -317,11 +485,11 @@
 				</port>
 			</output>
 			<blobs>
-				<weights offset="317696" size="147456"/>
-				<biases offset="465152" size="256"/>
+				<weights offset="161664" size="256"/>
+				<biases offset="465536" size="256"/>
 			</blobs>
 		</layer>
-		<layer id="15" name="CNN/conv2d_8/Conv2D" precision="FP32" type="Convolution">
+		<layer id="23" name="CNN/conv2d_8/Conv2D" precision="FP32" type="Convolution">
 			<data auto_pad="same_upper" dilations="1,1" group="1" kernel="3,3" output="64" pads_begin="1,1" pads_end="1,1" strides="1,1"/>
 			<input>
 				<port id="0">
@@ -332,7 +500,7 @@
 				</port>
 			</input>
 			<output>
-				<port id="3">
+				<port id="2">
 					<dim>1</dim>
 					<dim>64</dim>
 					<dim>8</dim>
@@ -340,18 +508,16 @@
 				</port>
 			</output>
 			<blobs>
-				<weights offset="465408" size="147456"/>
-				<biases offset="612864" size="256"/>
+				<weights offset="465792" size="147456"/>
 			</blobs>
 		</layer>
-		<layer id="16" name="CNN/conv2d_9/Conv2D" precision="FP32" type="Convolution">
-			<data auto_pad="same_upper" dilations="1,1" group="1" kernel="1,1" output="64" pads_begin="0,0" pads_end="0,0" strides="2,2"/>
+		<layer id="24" name="CNN/conv2d_8/BiasAdd" precision="FP32" type="ScaleShift">
 			<input>
 				<port id="0">
 					<dim>1</dim>
 					<dim>64</dim>
-					<dim>15</dim>
-					<dim>20</dim>
+					<dim>8</dim>
+					<dim>10</dim>
 				</port>
 			</input>
 			<output>
@@ -363,11 +529,55 @@
 				</port>
 			</output>
 			<blobs>
-				<weights offset="613120" size="16384"/>
-				<biases offset="612864" size="256"/>
+				<weights offset="161664" size="256"/>
+				<biases offset="613248" size="256"/>
 			</blobs>
 		</layer>
-		<layer id="17" name="CNN/add_2" precision="FP32" type="Eltwise">
+		<layer id="25" name="CNN/conv2d_9/Conv2D" precision="FP32" type="Convolution">
+			<data auto_pad="same_upper" dilations="1,1" group="1" kernel="1,1" output="64" pads_begin="0,0" pads_end="0,0" strides="2,2"/>
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>15</dim>
+					<dim>20</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>8</dim>
+					<dim>10</dim>
+				</port>
+			</output>
+			<blobs>
+				<weights offset="613504" size="16384"/>
+			</blobs>
+		</layer>
+		<layer id="26" name="CNN/conv2d_9/BiasAdd" precision="FP32" type="ScaleShift">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>8</dim>
+					<dim>10</dim>
+				</port>
+			</input>
+			<output>
+				<port id="3">
+					<dim>1</dim>
+					<dim>64</dim>
+					<dim>8</dim>
+					<dim>10</dim>
+				</port>
+			</output>
+			<blobs>
+				<weights offset="161664" size="256"/>
+				<biases offset="613248" size="256"/>
+			</blobs>
+		</layer>
+		<layer id="27" name="CNN/add_2" precision="FP32" type="Eltwise">
 			<data operation="sum"/>
 			<input>
 				<port id="0">
@@ -392,7 +602,7 @@
 				</port>
 			</output>
 		</layer>
-		<layer id="18" name="LeakyReLU_340" precision="FP32" type="ReLU">
+		<layer id="28" name="LeakyReLU_318" precision="FP32" type="ReLU">
 			<data negative_slope="0.20000000298023224"/>
 			<input>
 				<port id="0">
@@ -411,7 +621,7 @@
 				</port>
 			</output>
 		</layer>
-		<layer id="19" name="CNN/flatten/Reshape" precision="FP32" type="Reshape">
+		<layer id="29" name="CNN/flatten/Reshape" precision="FP32" type="Reshape">
 			<data axis="0" dim="1,-1" num_axes="-1"/>
 			<input>
 				<port id="0">
@@ -428,7 +638,7 @@
 				</port>
 			</output>
 		</layer>
-		<layer id="20" name="Mean_Prediction/dense/MatMul" precision="FP32" type="FullyConnected">
+		<layer id="30" name="Mean_Prediction/dense/MatMul" precision="FP32" type="FullyConnected">
 			<data out-size="128"/>
 			<input>
 				<port id="0">
@@ -437,17 +647,34 @@
 				</port>
 			</input>
 			<output>
+				<port id="2">
+					<dim>1</dim>
+					<dim>128</dim>
+				</port>
+			</output>
+			<blobs>
+				<weights offset="629888" size="2621440"/>
+			</blobs>
+		</layer>
+		<layer id="31" name="Mean_Prediction/dense/BiasAdd" precision="FP32" type="ScaleShift">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>128</dim>
+				</port>
+			</input>
+			<output>
 				<port id="3">
 					<dim>1</dim>
 					<dim>128</dim>
 				</port>
 			</output>
 			<blobs>
-				<weights offset="629504" size="2621440"/>
-				<biases offset="3250944" size="512"/>
+				<weights offset="3251328" size="512"/>
+				<biases offset="3251840" size="512"/>
 			</blobs>
 		</layer>
-		<layer id="21" name="LeakyReLU_341" precision="FP32" type="ReLU">
+		<layer id="32" name="LeakyReLU_" precision="FP32" type="ReLU">
 			<data negative_slope="0.20000000298023224"/>
 			<input>
 				<port id="0">
@@ -462,7 +689,7 @@
 				</port>
 			</output>
 		</layer>
-		<layer id="22" name="Mean_Prediction/dense_1/MatMul" precision="FP32" type="FullyConnected">
+		<layer id="33" name="Mean_Prediction/dense_1/MatMul" precision="FP32" type="FullyConnected">
 			<data out-size="64"/>
 			<input>
 				<port id="0">
@@ -471,17 +698,34 @@
 				</port>
 			</input>
 			<output>
+				<port id="2">
+					<dim>1</dim>
+					<dim>64</dim>
+				</port>
+			</output>
+			<blobs>
+				<weights offset="3252352" size="32768"/>
+			</blobs>
+		</layer>
+		<layer id="34" name="Mean_Prediction/dense_1/BiasAdd" precision="FP32" type="ScaleShift">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>64</dim>
+				</port>
+			</input>
+			<output>
 				<port id="3">
 					<dim>1</dim>
 					<dim>64</dim>
 				</port>
 			</output>
 			<blobs>
-				<weights offset="3251456" size="32768"/>
-				<biases offset="3284224" size="256"/>
+				<weights offset="161664" size="256"/>
+				<biases offset="3285120" size="256"/>
 			</blobs>
 		</layer>
-		<layer id="23" name="LeakyReLU_342" precision="FP32" type="ReLU">
+		<layer id="35" name="LeakyReLU_323" precision="FP32" type="ReLU">
 			<data negative_slope="0.20000000298023224"/>
 			<input>
 				<port id="0">
@@ -496,12 +740,29 @@
 				</port>
 			</output>
 		</layer>
-		<layer id="24" name="Mean_Prediction/dense_2/MatMul" precision="FP32" type="FullyConnected">
+		<layer id="36" name="Mean_Prediction/dense_2/MatMul" precision="FP32" type="FullyConnected">
 			<data out-size="32"/>
 			<input>
 				<port id="0">
 					<dim>1</dim>
 					<dim>64</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2">
+					<dim>1</dim>
+					<dim>32</dim>
+				</port>
+			</output>
+			<blobs>
+				<weights offset="3285376" size="8192"/>
+			</blobs>
+		</layer>
+		<layer id="37" name="Mean_Prediction/dense_2/BiasAdd" precision="FP32" type="ScaleShift">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>32</dim>
 				</port>
 			</input>
 			<output>
@@ -511,16 +772,33 @@
 				</port>
 			</output>
 			<blobs>
-				<weights offset="3284480" size="8192"/>
-				<biases offset="3292672" size="128"/>
+				<weights offset="9600" size="128"/>
+				<biases offset="3293568" size="128"/>
 			</blobs>
 		</layer>
-		<layer id="25" name="Mean_Prediction/dense_3/MatMul" precision="FP32" type="FullyConnected">
+		<layer id="38" name="Mean_Prediction/dense_3/MatMul" precision="FP32" type="FullyConnected">
 			<data out-size="4"/>
 			<input>
 				<port id="0">
 					<dim>1</dim>
 					<dim>32</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2">
+					<dim>1</dim>
+					<dim>4</dim>
+				</port>
+			</output>
+			<blobs>
+				<weights offset="3293696" size="512"/>
+			</blobs>
+		</layer>
+		<layer id="39" name="Mean_Prediction/dense_3/BiasAdd" precision="FP32" type="ScaleShift">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>4</dim>
 				</port>
 			</input>
 			<output>
@@ -530,11 +808,11 @@
 				</port>
 			</output>
 			<blobs>
-				<weights offset="3292800" size="512"/>
-				<biases offset="3293312" size="16"/>
+				<weights offset="3294208" size="16"/>
+				<biases offset="3294224" size="16"/>
 			</blobs>
 		</layer>
-		<layer id="26" name="Variance_Prediction/dense/MatMul" precision="FP32" type="FullyConnected">
+		<layer id="40" name="Variance_Prediction/dense/MatMul" precision="FP32" type="FullyConnected">
 			<data out-size="128"/>
 			<input>
 				<port id="0">
@@ -543,17 +821,34 @@
 				</port>
 			</input>
 			<output>
+				<port id="2">
+					<dim>1</dim>
+					<dim>128</dim>
+				</port>
+			</output>
+			<blobs>
+				<weights offset="3294240" size="2621440"/>
+			</blobs>
+		</layer>
+		<layer id="41" name="Variance_Prediction/dense/BiasAdd" precision="FP32" type="ScaleShift">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>128</dim>
+				</port>
+			</input>
+			<output>
 				<port id="3">
 					<dim>1</dim>
 					<dim>128</dim>
 				</port>
 			</output>
 			<blobs>
-				<weights offset="3293328" size="2621440"/>
-				<biases offset="5914768" size="512"/>
+				<weights offset="3251328" size="512"/>
+				<biases offset="5915680" size="512"/>
 			</blobs>
 		</layer>
-		<layer id="27" name="LeakyReLU_336" precision="FP32" type="ReLU">
+		<layer id="42" name="LeakyReLU_322" precision="FP32" type="ReLU">
 			<data negative_slope="0.20000000298023224"/>
 			<input>
 				<port id="0">
@@ -568,7 +863,7 @@
 				</port>
 			</output>
 		</layer>
-		<layer id="28" name="Variance_Prediction/dense_1/MatMul" precision="FP32" type="FullyConnected">
+		<layer id="43" name="Variance_Prediction/dense_1/MatMul" precision="FP32" type="FullyConnected">
 			<data out-size="64"/>
 			<input>
 				<port id="0">
@@ -577,17 +872,34 @@
 				</port>
 			</input>
 			<output>
+				<port id="2">
+					<dim>1</dim>
+					<dim>64</dim>
+				</port>
+			</output>
+			<blobs>
+				<weights offset="5916192" size="32768"/>
+			</blobs>
+		</layer>
+		<layer id="44" name="Variance_Prediction/dense_1/BiasAdd" precision="FP32" type="ScaleShift">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>64</dim>
+				</port>
+			</input>
+			<output>
 				<port id="3">
 					<dim>1</dim>
 					<dim>64</dim>
 				</port>
 			</output>
 			<blobs>
-				<weights offset="5915280" size="32768"/>
-				<biases offset="5948048" size="256"/>
+				<weights offset="161664" size="256"/>
+				<biases offset="5948960" size="256"/>
 			</blobs>
 		</layer>
-		<layer id="29" name="LeakyReLU_339" precision="FP32" type="ReLU">
+		<layer id="45" name="LeakyReLU_320" precision="FP32" type="ReLU">
 			<data negative_slope="0.20000000298023224"/>
 			<input>
 				<port id="0">
@@ -602,12 +914,29 @@
 				</port>
 			</output>
 		</layer>
-		<layer id="30" name="Variance_Prediction/dense_2/MatMul" precision="FP32" type="FullyConnected">
+		<layer id="46" name="Variance_Prediction/dense_2/MatMul" precision="FP32" type="FullyConnected">
 			<data out-size="32"/>
 			<input>
 				<port id="0">
 					<dim>1</dim>
 					<dim>64</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2">
+					<dim>1</dim>
+					<dim>32</dim>
+				</port>
+			</output>
+			<blobs>
+				<weights offset="5949216" size="8192"/>
+			</blobs>
+		</layer>
+		<layer id="47" name="Variance_Prediction/dense_2/BiasAdd" precision="FP32" type="ScaleShift">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>32</dim>
 				</port>
 			</input>
 			<output>
@@ -617,16 +946,33 @@
 				</port>
 			</output>
 			<blobs>
-				<weights offset="5948304" size="8192"/>
-				<biases offset="5956496" size="128"/>
+				<weights offset="9600" size="128"/>
+				<biases offset="5957408" size="128"/>
 			</blobs>
 		</layer>
-		<layer id="31" name="Variance_Prediction/dense_3/MatMul" precision="FP32" type="FullyConnected">
+		<layer id="48" name="Variance_Prediction/dense_3/MatMul" precision="FP32" type="FullyConnected">
 			<data out-size="4"/>
 			<input>
 				<port id="0">
 					<dim>1</dim>
 					<dim>32</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2">
+					<dim>1</dim>
+					<dim>4</dim>
+				</port>
+			</output>
+			<blobs>
+				<weights offset="5957536" size="512"/>
+			</blobs>
+		</layer>
+		<layer id="49" name="Variance_Prediction/dense_3/BiasAdd" precision="FP32" type="ScaleShift">
+			<input>
+				<port id="0">
+					<dim>1</dim>
+					<dim>4</dim>
 				</port>
 			</input>
 			<output>
@@ -636,11 +982,11 @@
 				</port>
 			</output>
 			<blobs>
-				<weights offset="5956624" size="512"/>
-				<biases offset="5957136" size="16"/>
+				<weights offset="3294208" size="16"/>
+				<biases offset="5958048" size="16"/>
 			</blobs>
 		</layer>
-		<layer id="32" name="concat" precision="FP32" type="Concat">
+		<layer id="50" name="concat" precision="FP32" type="Concat">
 			<data axis="1"/>
 			<input>
 				<port id="0">
@@ -662,47 +1008,65 @@
 	</layers>
 	<edges>
 		<edge from-layer="0" from-port="0" to-layer="1" to-port="0"/>
-		<edge from-layer="1" from-port="3" to-layer="2" to-port="0"/>
-		<edge from-layer="2" from-port="1" to-layer="3" to-port="0"/>
+		<edge from-layer="1" from-port="2" to-layer="2" to-port="0"/>
+		<edge from-layer="2" from-port="3" to-layer="3" to-port="0"/>
 		<edge from-layer="3" from-port="1" to-layer="4" to-port="0"/>
-		<edge from-layer="4" from-port="3" to-layer="5" to-port="0"/>
-		<edge from-layer="2" from-port="1" to-layer="6" to-port="0"/>
-		<edge from-layer="5" from-port="3" to-layer="7" to-port="0"/>
-		<edge from-layer="6" from-port="3" to-layer="7" to-port="1"/>
+		<edge from-layer="4" from-port="1" to-layer="5" to-port="0"/>
+		<edge from-layer="5" from-port="2" to-layer="6" to-port="0"/>
+		<edge from-layer="6" from-port="3" to-layer="7" to-port="0"/>
 		<edge from-layer="7" from-port="2" to-layer="8" to-port="0"/>
-		<edge from-layer="8" from-port="1" to-layer="9" to-port="0"/>
-		<edge from-layer="9" from-port="3" to-layer="10" to-port="0"/>
-		<edge from-layer="7" from-port="2" to-layer="11" to-port="0"/>
-		<edge from-layer="10" from-port="3" to-layer="12" to-port="0"/>
-		<edge from-layer="11" from-port="3" to-layer="12" to-port="1"/>
-		<edge from-layer="12" from-port="2" to-layer="13" to-port="0"/>
-		<edge from-layer="13" from-port="1" to-layer="14" to-port="0"/>
+		<edge from-layer="3" from-port="1" to-layer="9" to-port="0"/>
+		<edge from-layer="9" from-port="2" to-layer="10" to-port="0"/>
+		<edge from-layer="8" from-port="3" to-layer="11" to-port="0"/>
+		<edge from-layer="10" from-port="3" to-layer="11" to-port="1"/>
+		<edge from-layer="11" from-port="2" to-layer="12" to-port="0"/>
+		<edge from-layer="12" from-port="1" to-layer="13" to-port="0"/>
+		<edge from-layer="13" from-port="2" to-layer="14" to-port="0"/>
 		<edge from-layer="14" from-port="3" to-layer="15" to-port="0"/>
-		<edge from-layer="12" from-port="2" to-layer="16" to-port="0"/>
-		<edge from-layer="15" from-port="3" to-layer="17" to-port="0"/>
-		<edge from-layer="16" from-port="3" to-layer="17" to-port="1"/>
+		<edge from-layer="15" from-port="2" to-layer="16" to-port="0"/>
+		<edge from-layer="11" from-port="2" to-layer="17" to-port="0"/>
 		<edge from-layer="17" from-port="2" to-layer="18" to-port="0"/>
-		<edge from-layer="18" from-port="1" to-layer="19" to-port="0"/>
-		<edge from-layer="19" from-port="1" to-layer="20" to-port="0"/>
-		<edge from-layer="20" from-port="3" to-layer="21" to-port="0"/>
-		<edge from-layer="21" from-port="1" to-layer="22" to-port="0"/>
+		<edge from-layer="16" from-port="3" to-layer="19" to-port="0"/>
+		<edge from-layer="18" from-port="3" to-layer="19" to-port="1"/>
+		<edge from-layer="19" from-port="2" to-layer="20" to-port="0"/>
+		<edge from-layer="20" from-port="1" to-layer="21" to-port="0"/>
+		<edge from-layer="21" from-port="2" to-layer="22" to-port="0"/>
 		<edge from-layer="22" from-port="3" to-layer="23" to-port="0"/>
-		<edge from-layer="23" from-port="1" to-layer="24" to-port="0"/>
-		<edge from-layer="24" from-port="3" to-layer="25" to-port="0"/>
-		<edge from-layer="19" from-port="1" to-layer="26" to-port="0"/>
-		<edge from-layer="26" from-port="3" to-layer="27" to-port="0"/>
-		<edge from-layer="27" from-port="1" to-layer="28" to-port="0"/>
-		<edge from-layer="28" from-port="3" to-layer="29" to-port="0"/>
+		<edge from-layer="23" from-port="2" to-layer="24" to-port="0"/>
+		<edge from-layer="19" from-port="2" to-layer="25" to-port="0"/>
+		<edge from-layer="25" from-port="2" to-layer="26" to-port="0"/>
+		<edge from-layer="24" from-port="3" to-layer="27" to-port="0"/>
+		<edge from-layer="26" from-port="3" to-layer="27" to-port="1"/>
+		<edge from-layer="27" from-port="2" to-layer="28" to-port="0"/>
+		<edge from-layer="28" from-port="1" to-layer="29" to-port="0"/>
 		<edge from-layer="29" from-port="1" to-layer="30" to-port="0"/>
-		<edge from-layer="30" from-port="3" to-layer="31" to-port="0"/>
-		<edge from-layer="25" from-port="3" to-layer="32" to-port="0"/>
-		<edge from-layer="31" from-port="3" to-layer="32" to-port="1"/>
+		<edge from-layer="30" from-port="2" to-layer="31" to-port="0"/>
+		<edge from-layer="31" from-port="3" to-layer="32" to-port="0"/>
+		<edge from-layer="32" from-port="1" to-layer="33" to-port="0"/>
+		<edge from-layer="33" from-port="2" to-layer="34" to-port="0"/>
+		<edge from-layer="34" from-port="3" to-layer="35" to-port="0"/>
+		<edge from-layer="35" from-port="1" to-layer="36" to-port="0"/>
+		<edge from-layer="36" from-port="2" to-layer="37" to-port="0"/>
+		<edge from-layer="37" from-port="3" to-layer="38" to-port="0"/>
+		<edge from-layer="38" from-port="2" to-layer="39" to-port="0"/>
+		<edge from-layer="29" from-port="1" to-layer="40" to-port="0"/>
+		<edge from-layer="40" from-port="2" to-layer="41" to-port="0"/>
+		<edge from-layer="41" from-port="3" to-layer="42" to-port="0"/>
+		<edge from-layer="42" from-port="1" to-layer="43" to-port="0"/>
+		<edge from-layer="43" from-port="2" to-layer="44" to-port="0"/>
+		<edge from-layer="44" from-port="3" to-layer="45" to-port="0"/>
+		<edge from-layer="45" from-port="1" to-layer="46" to-port="0"/>
+		<edge from-layer="46" from-port="2" to-layer="47" to-port="0"/>
+		<edge from-layer="47" from-port="3" to-layer="48" to-port="0"/>
+		<edge from-layer="48" from-port="2" to-layer="49" to-port="0"/>
+		<edge from-layer="39" from-port="3" to-layer="50" to-port="0"/>
+		<edge from-layer="49" from-port="3" to-layer="50" to-port="1"/>
 	</edges>
 	<meta_data>
 		<MO_version value="1.4.292.6ef7232d"/>
 		<cli_parameters>
-			<data_type value="float"/>
-			<disable_fusing value="False"/>
+			<data_type value="FP32"/>
+			<disable_fusing value="True"/>
 			<disable_gfusing value="False"/>
 			<disable_nhwc_to_nchw value="False"/>
 			<disable_resnet_optimization value="False"/>

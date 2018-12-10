@@ -1,6 +1,6 @@
 from tensorflow.python.tools import freeze_graph
 
-MODEL_DIR = 'simplified_testgraph/'
+MODEL_DIR = 'graph_data/'
 
 ##########################3
 import tensorflow as tf

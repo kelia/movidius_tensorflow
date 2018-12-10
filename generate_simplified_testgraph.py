@@ -3,8 +3,8 @@ import os
 import tensorflow as tf
 from models.nets import cnn, mean_predictor, variance_predictor_no_exp
 
-checkpoint_input_dir = 'tensorflow_code/best_checkpoint'
-checkpoint_output_dir = 'simplified_testgraph'
+checkpoint_input_dir = 'training/results'
+checkpoint_output_dir = 'graph_data'
 checkpoint_filename = 'model.best'
 test_graph_filename = 'test_graph'
 

@@ -58,9 +58,8 @@ class Learner(object):
 
     def get_filenames_list(self, directory):
         assert os.path.isdir(directory)
-        iterator = DirectoryIterator(directory, self.config.radius_normalization,
-                                     shuffle=False)
-        return iterator.filenames, iterator.poses_labels
+        iterator = DirectoryIterator(directory, self.config.radius_normalization)
+        return iterator.filenames, iterator.labels
 
     def build_train_graph(self):
         is_training_ph = tf.placeholder(tf.bool, shape=(), name="is_training")

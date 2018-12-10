@@ -17,7 +17,7 @@ flags.DEFINE_string('train_dir', "../training", 'Folder containing'
                      ' training experiments')
 flags.DEFINE_string('val_dir', None, 'Folder containing'
                      ' validation experiments')
-flags.DEFINE_string('checkpoint_dir', "../results/", "Directory name to"
+flags.DEFINE_string('checkpoint_dir', "../../graph_data/", "Directory name to"
                      "save checkpoints and logs.")
 
 # Input Queues reading
