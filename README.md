@@ -57,7 +57,6 @@ In the following, the results of a simple forward pass are compared between the 
  - plain tensorflow
  - tensorflow calling the frozen graph
  - openvino inference engine python API
- - openvino inference engine C++ API
    
 ```
 python3 compare_results.py 
