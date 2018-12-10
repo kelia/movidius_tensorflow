@@ -1,14 +1,6 @@
 <?xml version="1.0" ?>
 <mapping>
 	<map>
-		<framework name="CNN/add" out_port_id="0"/>
-		<IR id="11" name="CNN/add" out_port_id="2"/>
-	</map>
-	<map>
-		<framework name="CNN/add_1" out_port_id="0"/>
-		<IR id="19" name="CNN/add_1" out_port_id="2"/>
-	</map>
-	<map>
 		<framework name="raw_input" out_port_id="0"/>
 		<IR id="0" name="raw_input" out_port_id="0"/>
 	</map>
@@ -17,16 +9,12 @@
 		<IR id="1" name="CNN/conv2d/Conv2D" out_port_id="2"/>
 	</map>
 	<map>
-		<framework name="CNN/conv2d/BiasAdd" out_port_id="0"/>
-		<IR id="2" name="CNN/conv2d/BiasAdd" out_port_id="3"/>
-	</map>
-	<map>
 		<framework name="CNN/max_pooling2d/MaxPool" out_port_id="0"/>
 		<IR id="3" name="CNN/max_pooling2d/MaxPool" out_port_id="1"/>
 	</map>
 	<map>
 		<framework name="CNN/LeakyRelu/Maximum" out_port_id="0"/>
-		<IR id="4" name="LeakyReLU_321" out_port_id="1"/>
+		<IR id="4" name="LeakyReLU_318" out_port_id="1"/>
 	</map>
 	<map>
 		<framework name="CNN/conv2d_1/Conv2D" out_port_id="0"/>
@@ -53,8 +41,12 @@
 		<IR id="10" name="CNN/conv2d_3/BiasAdd" out_port_id="3"/>
 	</map>
 	<map>
+		<framework name="CNN/add" out_port_id="0"/>
+		<IR id="11" name="CNN/add" out_port_id="2"/>
+	</map>
+	<map>
 		<framework name="CNN/LeakyRelu_1/Maximum" out_port_id="0"/>
-		<IR id="12" name="LeakyReLU_320" out_port_id="1"/>
+		<IR id="12" name="LeakyReLU_322" out_port_id="1"/>
 	</map>
 	<map>
 		<framework name="CNN/conv2d_4/Conv2D" out_port_id="0"/>
@@ -81,8 +73,12 @@
 		<IR id="18" name="CNN/conv2d_6/BiasAdd" out_port_id="3"/>
 	</map>
 	<map>
+		<framework name="CNN/add_1" out_port_id="0"/>
+		<IR id="19" name="CNN/add_1" out_port_id="2"/>
+	</map>
+	<map>
 		<framework name="CNN/LeakyRelu_2/Maximum" out_port_id="0"/>
-		<IR id="20" name="LeakyReLU_322" out_port_id="1"/>
+		<IR id="20" name="LeakyReLU_" out_port_id="1"/>
 	</map>
 	<map>
 		<framework name="CNN/conv2d_7/Conv2D" out_port_id="0"/>
@@ -109,16 +105,16 @@
 		<IR id="26" name="CNN/conv2d_9/BiasAdd" out_port_id="3"/>
 	</map>
 	<map>
-		<framework name="CNN/add_2" out_port_id="0"/>
-		<IR id="27" name="CNN/add_2" out_port_id="2"/>
-	</map>
-	<map>
 		<framework name="CNN/LeakyRelu_3/Maximum" out_port_id="0"/>
 		<IR id="28" name="LeakyReLU_324" out_port_id="1"/>
 	</map>
 	<map>
 		<framework name="CNN/flatten/Reshape" out_port_id="0"/>
 		<IR id="29" name="CNN/flatten/Reshape" out_port_id="1"/>
+	</map>
+	<map>
+		<framework name="Mean_Prediction/dense/MatMul" out_port_id="0"/>
+		<IR id="30" name="Mean_Prediction/dense/MatMul" out_port_id="2"/>
 	</map>
 	<map>
 		<framework name="Mean_Prediction/dropout/Identity" out_port_id="0"/>
@@ -130,7 +126,11 @@
 	</map>
 	<map>
 		<framework name="Mean_Prediction/LeakyRelu/Maximum" out_port_id="0"/>
-		<IR id="32" name="LeakyReLU_" out_port_id="1"/>
+		<IR id="32" name="LeakyReLU_320" out_port_id="1"/>
+	</map>
+	<map>
+		<framework name="Mean_Prediction/dense_1/MatMul" out_port_id="0"/>
+		<IR id="33" name="Mean_Prediction/dense_1/MatMul" out_port_id="2"/>
 	</map>
 	<map>
 		<framework name="Mean_Prediction/dropout_1/Identity" out_port_id="0"/>
@@ -142,7 +142,7 @@
 	</map>
 	<map>
 		<framework name="Mean_Prediction/LeakyRelu_1/Maximum" out_port_id="0"/>
-		<IR id="35" name="LeakyReLU_318" out_port_id="1"/>
+		<IR id="35" name="LeakyReLU_321" out_port_id="1"/>
 	</map>
 	<map>
 		<framework name="Mean_Prediction/dense_2/MatMul" out_port_id="0"/>
@@ -165,20 +165,12 @@
 		<IR id="39" name="Mean_Prediction/dense_3/BiasAdd" out_port_id="3"/>
 	</map>
 	<map>
-		<framework name="Variance_Prediction/dense/MatMul" out_port_id="0"/>
-		<IR id="40" name="Variance_Prediction/dense/MatMul" out_port_id="2"/>
-	</map>
-	<map>
 		<framework name="Variance_Prediction/dropout/Identity" out_port_id="0"/>
 		<IR id="41" name="Variance_Prediction/dense/BiasAdd" out_port_id="3"/>
 	</map>
 	<map>
 		<framework name="Variance_Prediction/dense/BiasAdd" out_port_id="0"/>
 		<IR id="41" name="Variance_Prediction/dense/BiasAdd" out_port_id="3"/>
-	</map>
-	<map>
-		<framework name="Variance_Prediction/LeakyRelu/Maximum" out_port_id="0"/>
-		<IR id="42" name="LeakyReLU_319" out_port_id="1"/>
 	</map>
 	<map>
 		<framework name="Variance_Prediction/dense_1/MatMul" out_port_id="0"/>
@@ -194,7 +186,7 @@
 	</map>
 	<map>
 		<framework name="Variance_Prediction/LeakyRelu_1/Maximum" out_port_id="0"/>
-		<IR id="45" name="LeakyReLU_323" out_port_id="1"/>
+		<IR id="45" name="LeakyReLU_319" out_port_id="1"/>
 	</map>
 	<map>
 		<framework name="Variance_Prediction/dense_2/MatMul" out_port_id="0"/>
@@ -225,11 +217,19 @@
 		<IR id="50" name="concat" out_port_id="2"/>
 	</map>
 	<map>
-		<framework name="Mean_Prediction/dense/MatMul" out_port_id="0"/>
-		<IR id="30" name="Mean_Prediction/dense/MatMul" out_port_id="2"/>
+		<framework name="CNN/add_2" out_port_id="0"/>
+		<IR id="27" name="CNN/add_2" out_port_id="2"/>
 	</map>
 	<map>
-		<framework name="Mean_Prediction/dense_1/MatMul" out_port_id="0"/>
-		<IR id="33" name="Mean_Prediction/dense_1/MatMul" out_port_id="2"/>
+		<framework name="Variance_Prediction/dense/MatMul" out_port_id="0"/>
+		<IR id="40" name="Variance_Prediction/dense/MatMul" out_port_id="2"/>
+	</map>
+	<map>
+		<framework name="Variance_Prediction/LeakyRelu/Maximum" out_port_id="0"/>
+		<IR id="42" name="LeakyReLU_323" out_port_id="1"/>
+	</map>
+	<map>
+		<framework name="CNN/conv2d/BiasAdd" out_port_id="0"/>
+		<IR id="2" name="CNN/conv2d/BiasAdd" out_port_id="3"/>
 	</map>
 </mapping>
