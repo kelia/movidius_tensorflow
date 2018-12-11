@@ -1,10 +1,11 @@
 import cv2
 import tensorflow as tf
+import time
 
 from training.src.models.nets import cnn, mean_predictor, variance_predictor_no_exp
 
 
-def plain_tf_inference(checkpoint, query_img):
+def plain_tf_inference(checkpoint, query_img, num_iterations):
     # Build test graph
     image_height = 240
     image_width = 320
@@ -38,8 +39,10 @@ def plain_tf_inference(checkpoint, query_img):
         # Do inference
         image = cv2.cvtColor(cv2.imread(query_img), cv2.COLOR_BGR2RGB)
 
-        inputs = {'images': image[None]}
-        feed_dict = {input_uint8: inputs['images']}
-        predictions = sess.run(prediction, feed_dict=feed_dict)
-
+        start_time = time.time()
+        for i in range(num_iterations):
+            inputs = {'images': image[None]}
+            feed_dict = {input_uint8: inputs['images']}
+            predictions = sess.run(prediction, feed_dict=feed_dict)
+        print("[{n}] inferences took [{s}] seconds.".format(n=num_iterations, s=(time.time() - start_time)))
     return predictions

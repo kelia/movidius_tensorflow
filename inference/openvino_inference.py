@@ -3,6 +3,7 @@ from __future__ import print_function
 import cv2
 import numpy as np
 from openvino.inference_engine import IENetwork, IEPlugin
+import time
 
 
 class OpenVinoDetector(object):
@@ -42,8 +43,13 @@ class OpenVinoDetector(object):
         return det_out
 
 
-def openvino_inference(intermediate_rep, query_img, device):
+def openvino_inference(intermediate_rep, query_img, num_iterations, device):
     t = OpenVinoDetector(intermediate_rep, device)
     image = cv2.imread(query_img)
-    prediction = t.predict(image)
+
+    start_time = time.time()
+    for i in range(num_iterations):
+        prediction = t.predict(image)
+    print("[{n}] inferences took [{s}] seconds.".format(n=num_iterations, s=(time.time() - start_time)))
+
     return prediction

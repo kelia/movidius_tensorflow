@@ -1,8 +1,9 @@
 import cv2
 import tensorflow as tf
+import time
 
 
-def frozen_tf_inference(frozen_model, query_img, print_ops_in_graph=False):
+def frozen_tf_inference(frozen_model, query_img, num_iterations, print_ops_in_graph=False):
     print("Feed frozen model from TF...")
 
     # load graph
@@ -30,8 +31,11 @@ def frozen_tf_inference(frozen_model, query_img, print_ops_in_graph=False):
         image = tf.cast(image, dtype=tf.float32)
         image = tf.divide(image, 255.0).eval()
 
-        prediction = sess.run(y, feed_dict={
-            x: image
-        })
+        start_time = time.time()
+        for i in range(num_iterations):
+            prediction = sess.run(y, feed_dict={
+                x: image
+            })
+        print("[{n}] inferences took [{s}] seconds.".format(n=num_iterations, s=(time.time() - start_time)))
 
         return prediction
