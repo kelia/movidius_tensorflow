@@ -1,5 +1,5 @@
 device: CPU
-query_img: /home/elia/code/catkin_adr/src/movidius_tensorflow/query_imgs/frame_00000.png
+query_img: /home/upboard/catkin_adr/src/movidius_tensorflow/query_imgs/frame_00000.png
 #model: /home/elia/code/catkin_adr/src/movidius_tensorflow/graph_data/optimized_graph_FP16.xml
-model: /home/elia/code/catkin_adr/src/movidius_tensorflow/graph_data/optimized_graph_FP32.xml
+model: /home/upboard/catkin_adr/src/movidius_tensorflow/graph_data/optimized_graph_FP32.xml
 radius_normalization: 5.0

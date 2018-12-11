@@ -49,14 +49,11 @@ std::vector<GatePose> HumanPoseEstimator::estimate(const cv::Mat &image) {
 
   cv::Size imageSize = image.size();
   InferenceEngine::Blob::Ptr input = request.GetBlob(network.getInputsInfo().begin()->first);
-
   auto data = input->buffer().as<InferenceEngine::PrecisionTrait<InferenceEngine::Precision::FP32>::value_type *>();
-
   // copy cv image
   //convert from bgr to rgb
   cv::Mat image_copy1 = image.clone();
-  cv::cvtColor(image, image_copy1, CV_BGR2RGB);
-
+  //cv::cvtColor(image, image_copy1, CV_BGR2RGB);
   image_copy1.convertTo(image_copy1, CV_32FC3);
 
   float beta = 1.0f / 255.0f;
@@ -71,10 +68,9 @@ std::vector<GatePose> HumanPoseEstimator::estimate(const cv::Mat &image) {
     for (size_t ch = 0; ch < num_channels; ++ch) {
       /**          [images stride + channels stride + pixel id ] all in bytes            **/
       float *matData = (float *) image_copy.data;
-      data[ch * image_size + pid] = matData[pid * num_channels + ch];
+      data[ch * image_size + pid] = matData[pid * num_channels + (2 - ch)];
     }
   }
-
   request.Infer();
 
   InferenceEngine::Blob::Ptr pafsBlob = request.GetBlob(pafsBlobName);
