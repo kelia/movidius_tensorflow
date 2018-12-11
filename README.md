@@ -2,7 +2,10 @@
 
 The documentation of openvino gives many examples, how to run specific network architectures by converting the model using their model optimizer. However, I could not find a single example that starts at the actual tensorflow code, and porting the model to the graph version needed for inference using the inference engine. 
 
-
+## Dependencies
+```
+sudo pip3 install tensorflow opencv-python colored
+```
 ## 0. Train the network (optionally)
 For completeness, I added code to generate your own checkpoints. To just check out the conversion from tensorflow checkpoints to the optimized intel representation, skip this section.
 
