@@ -1,0 +1,142 @@
+/opt/clion-2017.3/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/elia/code/catkin_adr/src/movidius_tensorflow/movidius_ros
+-- The C compiler identification is GNU 5.4.0
+-- The CXX compiler identification is GNU 5.4.0
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found OpenCV: /opt/intel/computer_vision_sdk_2018.4.420/opencv (found version "4.0.0") 
+-- Using CATKIN_DEVEL_PREFIX: /home/elia/code/catkin_adr/src/movidius_tensorflow/movidius_ros/cmake-build-debug/devel
+-- Using CMAKE_PREFIX_PATH: /home/elia/code/catkin_adr/devel;/opt/ros/kinetic
+-- This workspace overlays: /home/elia/code/catkin_adr/devel;/opt/ros/kinetic
+-- Found PythonInterp: /usr/bin/python (found version "2.7.12") 
+-- Using PYTHON_EXECUTABLE: /usr/bin/python
+-- Using Debian Python package layout
+-- Using empy: /usr/bin/empy
+-- Using CATKIN_ENABLE_TESTING: ON
+-- Call enable_testing()
+-- Using CATKIN_TEST_RESULTS_DIR: /home/elia/code/catkin_adr/src/movidius_tensorflow/movidius_ros/cmake-build-debug/test_results
+-- Found gmock sources under '/usr/src/gmock': gmock will be built
+-- Looking for pthread.h
+-- Looking for pthread.h - found
+-- Looking for pthread_create
+-- Looking for pthread_create - not found
+-- Looking for pthread_create in pthreads
+-- Looking for pthread_create in pthreads - not found
+-- Looking for pthread_create in pthread
+-- Looking for pthread_create in pthread - found
+-- Found Threads: TRUE  
+-- Found gtest sources under '/usr/src/gmock': gtests will be built
+-- Using Python nosetests: /usr/bin/nosetests-2.7
+-- catkin 0.7.14
+-- /etc/*-release distrib: Ubuntu 16.04
+-- Found IE: /opt/intel/computer_vision_sdk_2018.4.420/deployment_tools/inference_engine/lib/ubuntu_16.04/intel64/libinference_engine.so  
+-- Performing Test HAVE_CPUID_INFO
+-- Performing Test HAVE_CPUID_INFO - Success
+-- Host CPU features:
+--   3DNOW not supported
+--   3DNOWEXT not supported
+--   ABM not supported
+--   ADX supported
+--   AES supported
+--   AVX supported
+--   AVX2 supported
+--   AVX512CD not supported
+--   AVX512F not supported
+--   AVX512ER not supported
+--   AVX512PF not supported
+--   BMI1 supported
+--   BMI2 supported
+--   CLFSH supported
+--   CMPXCHG16B supported
+--   CX8 supported
+--   ERMS supported
+--   F16C supported
+--   FMA supported
+--   FSGSBASE supported
+--   FXSR supported
+--   HLE supported
+--   INVPCID supported
+--   LAHF supported
+--   LZCNT supported
+--   MMX supported
+--   MMXEXT not supported
+--   MONITOR supported
+--   MOVBE supported
+--   MSR supported
+--   OSXSAVE supported
+--   PCLMULQDQ supported
+--   POPCNT supported
+--   PREFETCHWT1 not supported
+--   RDRAND supported
+--   RDSEED supported
+--   RDTSCP supported
+--   RTM supported
+--   SEP supported
+--   SHA not supported
+--   SSE supported
+--   SSE2 supported
+--   SSE3 supported
+--   SSE4.1 supported
+--   SSE4.2 supported
+--   SSE4a not supported
+--   SSSE3 supported
+--   SYSCALL supported
+--   TBM not supported
+--   XOP not supported
+--   XSAVE supported
+-- Using these message generators: gencpp;geneus;genlisp;gennodejs;genpy
+-- Boost version: 1.58.0
+-- Found the following Boost libraries:
+--   thread
+--   signals
+--   system
+--   filesystem
+--   program_options
+--   regex
+--   iostreams
+--   date_time
+--   chrono
+--   atomic
+-- Found Protobuf: /usr/lib/x86_64-linux-gnu/libprotobuf.so;-lpthread (found version "2.6.1") 
+-- Boost version: 1.58.0
+-- Looking for OGRE...
+-- OGRE_PREFIX_WATCH changed.
+-- Found PkgConfig: /usr/bin/pkg-config (found version "0.29.1") 
+-- Checking for module 'OGRE'
+--   Found OGRE, version 1.9.0
+-- Found Ogre Ghadamon (1.9.0)
+-- Found OGRE: optimized;/usr/lib/x86_64-linux-gnu/libOgreMain.so;debug;/usr/lib/x86_64-linux-gnu/libOgreMain.so
+-- Looking for OGRE_Paging...
+-- Found OGRE_Paging: optimized;/usr/lib/x86_64-linux-gnu/libOgrePaging.so;debug;/usr/lib/x86_64-linux-gnu/libOgrePaging.so
+-- Looking for OGRE_Terrain...
+-- Found OGRE_Terrain: optimized;/usr/lib/x86_64-linux-gnu/libOgreTerrain.so;debug;/usr/lib/x86_64-linux-gnu/libOgreTerrain.so
+-- Looking for OGRE_Property...
+-- Found OGRE_Property: optimized;/usr/lib/x86_64-linux-gnu/libOgreProperty.so;debug;/usr/lib/x86_64-linux-gnu/libOgreProperty.so
+-- Looking for OGRE_RTShaderSystem...
+-- Found OGRE_RTShaderSystem: optimized;/usr/lib/x86_64-linux-gnu/libOgreRTShaderSystem.so;debug;/usr/lib/x86_64-linux-gnu/libOgreRTShaderSystem.so
+-- Looking for OGRE_Volume...
+-- Found OGRE_Volume: optimized;/usr/lib/x86_64-linux-gnu/libOgreVolume.so;debug;/usr/lib/x86_64-linux-gnu/libOgreVolume.so
+-- Looking for OGRE_Overlay...
+-- Found OGRE_Overlay: optimized;/usr/lib/x86_64-linux-gnu/libOgreOverlay.so;debug;/usr/lib/x86_64-linux-gnu/libOgreOverlay.so
+Debug
+/home/elia/code/catkin_adr/src/movidius_tensorflow/movidius_ros
+IE::inference_engine
+opencv_shapeopencv_gapiopencv_calib3dopencv_highguiopencv_videoopencv_coreopencv_features2dopencv_mlopencv_flannopencv_videoioopencv_imgprocopencv_imgcodecsopencv_objdetectopencv_stitchingopencv_photoopencv_dnnopencv_superresopencv_videostabopencv_pvl
+-- Marking SHARED_LIBRARY "human_pose_estimator" of package "movidius_ros" for installation
+-- Marking SHARED_LIBRARY "human_pose" of package "movidius_ros" for installation
+-- Marking SHARED_LIBRARY "movidius_ros" of package "movidius_ros" for installation
+-- Marking EXECUTABLE "movidius_ros_node" of package "movidius_ros" for installation
+-- Marking HEADER FILES in "include" folder of package "movidius_ros" for installation
+-- Marking SHARED CONTENT FOLDER "launch" of package "movidius_ros" for installation
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/elia/code/catkin_adr/src/movidius_tensorflow/movidius_ros/cmake-build-debug

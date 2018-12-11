@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: movidius_ros
+Description: Description of movidius_ros
+Version: 0.0.0
+Cflags: -I/usr/local/include
+Libs: -L/usr/local/lib -lhuman_pose_estimator -lhuman_pose -lmovidius_ros
+Requires: roscpp minkindr_conversions visualization_msgs gazebo_msgs rpg_common rpg_rotors_interface rotors_gazebo rotors_description manual_flight_assistant rqt_quad_gui

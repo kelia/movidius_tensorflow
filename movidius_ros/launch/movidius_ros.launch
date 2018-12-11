@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="quad_name" default="hummingbird"/>
+
+    <group ns="$(arg quad_name)">
+        <node name="movidius_ros" pkg="movidius_ros" type="movidius_ros_node" output="screen">
+            <rosparam file="$(find movidius_ros)/parameters/default.yaml"/>
+            <remap from="image_raw" to="rgb_camera/camera_1/image_raw" />
+        </node>
+    </group>
+</launch>

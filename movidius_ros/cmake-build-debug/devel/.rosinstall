@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/elia/code/catkin_adr/src/movidius_tensorflow/movidius_ros/cmake-build-debug/devel/setup.sh
